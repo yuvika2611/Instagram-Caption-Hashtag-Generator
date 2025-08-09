@@ -1,0 +1,1051 @@
+{
+  "name": "Instagram Caption & Hashtag Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        0
+      ],
+      "id": "5c2add94-59f0-488b-b79c-1f8a3ba0fdbd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appnDifIBAhcDYrGR",
+          "mode": "list",
+          "cachedResultName": "Instagram Leads or Hashtag Export Data",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYcZ5YmsLY6Rc6v",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR/tblYcZ5YmsLY6Rc6v"
+        },
+        "filterByFormula": "=AND({status} = 'UnProcessed',{postUrl} != '', {commentCount} > 50)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "14f66f0d-d093-4d8c-9faf-b0c9cbdd2a29",
+      "name": "Search records",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kBvFI8HixNrzqlXA",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appnDifIBAhcDYrGR",
+          "mode": "list",
+          "cachedResultName": "Instagram Leads or Hashtag Export Data",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYcZ5YmsLY6Rc6v",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR/tblYcZ5YmsLY6Rc6v"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "commentCount": "={{ $('Search records').item.json.commentCount }}",
+            "likeCount": "={{ $('Search records').item.json.likeCount }}",
+            "postId": "={{ $('Search records').item.json.postId }}",
+            "ownerId": "={{ $('Search records').item.json.ownerId }}",
+            "id": "={{ $('Search records').item.json.id }}",
+            "postUrl": "={{ $('Search records').item.json.postUrl }}",
+            "profileUrl": "={{ $('Search records').item.json.profileUrl }}",
+            "username": "={{ $('Search records').item.json.username }}",
+            "fullName": "={{ $('Search records').item.json.fullName }}",
+            "pubDate": "={{ $('Search records').item.json.pubDate }}",
+            "description": "={{ $('Search records').item.json.description }}",
+            "type": "={{ $('Search records').item.json.type }}",
+            "query": "={{ $('Search records').item.json.query }}",
+            "timestamp": "={{ $('Search records').item.json.timestamp }}",
+            "location": "={{ $('Search records').item.json.location }}",
+            "videoUrl": "={{ $('Search records').item.json.videoUrl }}",
+            "caption": "={{ $('Search records').item.json.caption }}",
+            "status": "Processed",
+            "Generated Caption": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "postUrl",
+              "displayName": "postUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "profileUrl",
+              "displayName": "profileUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "commentCount",
+              "displayName": "commentCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "likeCount",
+              "displayName": "likeCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "pubDate",
+              "displayName": "pubDate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "postId",
+              "displayName": "postId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ownerId",
+              "displayName": "ownerId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Carousel",
+                  "value": "Carousel"
+                },
+                {
+                  "name": "Photo",
+                  "value": "Photo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "#smallbusinessowner",
+                  "value": "#smallbusinessowner"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Bangkok",
+                  "value": "Bangkok"
+                },
+                {
+                  "name": "Thailand",
+                  "value": "Thailand"
+                },
+                {
+                  "name": "Westbourne",
+                  "value": "Westbourne"
+                },
+                {
+                  "name": "Dorset",
+                  "value": "Dorset"
+                },
+                {
+                  "name": "Miami",
+                  "value": "Miami"
+                },
+                {
+                  "name": "Florida",
+                  "value": "Florida"
+                },
+                {
+                  "name": "Manasquan",
+                  "value": "Manasquan"
+                },
+                {
+                  "name": "New Jersey",
+                  "value": "New Jersey"
+                },
+                {
+                  "name": "Los Angeles",
+                  "value": "Los Angeles"
+                },
+                {
+                  "name": "California",
+                  "value": "California"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "isSidecar",
+              "displayName": "isSidecar",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "videoUrl",
+              "displayName": "videoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "viewCount",
+              "displayName": "viewCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "imgUrl",
+              "displayName": "imgUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sidecarMedias",
+              "displayName": "sidecarMedias",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "ModifiedTime2025",
+              "displayName": "ModifiedTime2025",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Processed",
+                  "value": "Processed"
+                },
+                {
+                  "name": "UnProcessed",
+                  "value": "UnProcessed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "lastChecked",
+              "displayName": "lastChecked",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post Ready",
+              "displayName": "Post Ready",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "caption",
+              "displayName": "caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Generated Caption",
+              "displayName": "Generated Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        464,
+        0
+      ],
+      "id": "cd36c071-60f7-4a6d-b2fd-6e5ead17a6cc",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kBvFI8HixNrzqlXA",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Based on this Instagram caption, suggest 10 relevant hashtags. Only give the hashtags separated by spaces.\nCaption: {{ $json.fields['Generated Caption'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        672,
+        0
+      ],
+      "id": "c1433772-52e0-474f-b33c-3f40ed6863a5",
+      "name": "Generate Hashtags",
+      "credentials": {
+        "openAiApi": {
+          "id": "3aNNteoUgrLx2Gge",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a creative social media expert. Write an engaging Instagram caption using this input:{{ $json.description }} . Make it witty, include relevant emojis, and add a CTA."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        112,
+        0
+      ],
+      "id": "d3375f99-04da-4709-9275-31a5ba1fb1ac",
+      "name": "Generates Captions",
+      "credentials": {
+        "openAiApi": {
+          "id": "3aNNteoUgrLx2Gge",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appnDifIBAhcDYrGR",
+          "mode": "list",
+          "cachedResultName": "Instagram Leads or Hashtag Export Data",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYcZ5YmsLY6Rc6v",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appnDifIBAhcDYrGR/tblYcZ5YmsLY6Rc6v"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "isSidecar": true,
+            "id": "={{ $('Update record').item.json.id }}",
+            "postUrl": "={{ $('Update record').item.json.fields.postUrl }}",
+            "profileUrl": "={{ $('Update record').item.json.fields.profileUrl }}",
+            "username": "={{ $('Update record').item.json.fields.username }}",
+            "fullName": "={{ $('Update record').item.json.fields.fullName }}",
+            "commentCount": "={{ $('Update record').item.json.fields.commentCount }}",
+            "likeCount": "={{ $('Update record').item.json.fields.likeCount }}",
+            "pubDate": "={{ $('Update record').item.json.fields.pubDate }}",
+            "description": "={{ $('Update record').item.json.fields.description }}",
+            "postId": "={{ $('Update record').item.json.fields.postId }}",
+            "ownerId": "={{ $('Update record').item.json.fields.ownerId }}",
+            "type": "={{ $('Update record').item.json.fields.type }}",
+            "query": "={{ $('Update record').item.json.fields.query }}",
+            "timestamp": "={{ $('Update record').item.json.fields.timestamp }}",
+            "location": "={{ $('Update record').item.json.fields.location }}",
+            "imgUrl": "={{ $('Update record').item.json.fields.imgUrl }}",
+            "sidecarMedias": "={{ $('Update record').item.json.fields.sidecarMedias }}",
+            "status": "Processed",
+            "caption": "={{ $('Update record').item.json.fields.caption }}",
+            "Generated Caption": "={{ $('Update record').item.json.fields['Generated Caption'] }}",
+            "Hashtags": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "postUrl",
+              "displayName": "postUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "profileUrl",
+              "displayName": "profileUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "commentCount",
+              "displayName": "commentCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "likeCount",
+              "displayName": "likeCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "pubDate",
+              "displayName": "pubDate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "postId",
+              "displayName": "postId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ownerId",
+              "displayName": "ownerId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Carousel",
+                  "value": "Carousel"
+                },
+                {
+                  "name": "Photo",
+                  "value": "Photo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "#smallbusinessowner",
+                  "value": "#smallbusinessowner"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Bangkok",
+                  "value": "Bangkok"
+                },
+                {
+                  "name": "Thailand",
+                  "value": "Thailand"
+                },
+                {
+                  "name": "Westbourne",
+                  "value": "Westbourne"
+                },
+                {
+                  "name": "Dorset",
+                  "value": "Dorset"
+                },
+                {
+                  "name": "Miami",
+                  "value": "Miami"
+                },
+                {
+                  "name": "Florida",
+                  "value": "Florida"
+                },
+                {
+                  "name": "Manasquan",
+                  "value": "Manasquan"
+                },
+                {
+                  "name": "New Jersey",
+                  "value": "New Jersey"
+                },
+                {
+                  "name": "Los Angeles",
+                  "value": "Los Angeles"
+                },
+                {
+                  "name": "California",
+                  "value": "California"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "isSidecar",
+              "displayName": "isSidecar",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "videoUrl",
+              "displayName": "videoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "viewCount",
+              "displayName": "viewCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "imgUrl",
+              "displayName": "imgUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "sidecarMedias",
+              "displayName": "sidecarMedias",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ModifiedTime2025",
+              "displayName": "ModifiedTime2025",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Processed",
+                  "value": "Processed"
+                },
+                {
+                  "name": "UnProcessed",
+                  "value": "UnProcessed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "lastChecked",
+              "displayName": "lastChecked",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Post Ready",
+              "displayName": "Post Ready",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "caption",
+              "displayName": "caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Generated Caption",
+              "displayName": "Generated Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Hashtags",
+              "displayName": "Hashtags",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "e2f73707-05a7-408e-9078-f7eab563eee6",
+      "name": "Update record1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kBvFI8HixNrzqlXA",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "Generates Captions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update record": {
+      "main": [
+        [
+          {
+            "node": "Generate Hashtags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generates Captions": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Hashtags": {
+      "main": [
+        [
+          {
+            "node": "Update record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "003cdb4d-2b70-4020-9b81-e4f2ff174bfd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d076510af29e6de45fed4bcfc5bba8ffd3e40772e8df40c3bb028e71cb367cd2"
+  },
+  "id": "Mn2lIGpwSRcrf33o",
+  "tags": []
+}
